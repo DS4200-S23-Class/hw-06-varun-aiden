@@ -153,11 +153,6 @@ const FRAME3 = d3.select("#vis3")
                     .attr("class", "frame");
 
 d3.csv("data/iris.csv").then((data) => {
-    
-    const COLOR = d3
-      .scaleOrdinal()
-      .domain(["setosa", "versicolor", "virginica"])
-      .range(["green", "orange", "blue"]);
 
     // Define scale functions that maps our data x values 
     // (domain) to pixel values (range)
@@ -176,12 +171,12 @@ d3.csv("data/iris.csv").then((data) => {
     FRAME3.selectAll("bars")  
         .data(data) // passed from .then  
         .enter()       
-        .append("rect")  
+        .append("rect")
+          .attr("class", "bar")  
           .attr("x", (d) => { return (X_SCALE_SPECIES(d.Species) + MARGINS.left); }) 
           .attr("y", 100) 
           .attr("width", X_SCALE_SPECIES.bandwidth())
           .attr("height", 250)
-          .attr("class", "point")
           .style("fill", function (d) {
             if(d.Species === "setosa") {
               return "green"
