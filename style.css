@@ -1,0 +1,27 @@
+/* External Style Sheet */
+
+/* Make all font on webpage Arial */
+body {
+  font-family: Arial;
+}
+
+/* Center the headers */
+h1 {
+  text-align: center;
+}
+
+/* Set each column to 1/3 of page */
+#col1 {
+  width: 33.3%;
+  min-height: 400px;
+}
+
+#col2 {
+  width: 33.3%;
+  min-height: 400px;
+}
+
+#col3 {
+  width: 33.3%;
+  min-height: 400px;
+}
