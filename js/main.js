@@ -18,7 +18,6 @@ const FRAME1 = d3.select("#vis1")
 // Read data and create first plot
 d3.csv("data/iris.csv").then((data) => {
 
-  // Find max values
   const MAX_X_LENGTH = d3.max(data, (d) => { return parseInt(d.Sepal_Length); });
   const MAX_Y_LENGTH = d3.max(data, (d) => { return parseInt(d.Petal_Length); });
 
@@ -42,7 +41,16 @@ d3.csv("data/iris.csv").then((data) => {
         .attr("class", "point")
         .attr("cx", (d) => { return (X_SCALE_LENGTH(d.Sepal_Length) + MARGINS.left); })
         .attr("cy", (d) => { return (Y_SCALE_LENGTH(d.Petal_Length) + MARGINS.bottom); })
-        .attr("r", 4);
+        .attr("r", 4)
+        .style("fill", function (d) {
+          if(d.Species === "setosa") {
+            return "green"
+          } else if (d.Species === "versicolor") {
+            return "orange"
+          } else {
+            return "blue"
+          }
+        });
 
   // Add x axis to vis
   FRAME1.append("g") 
@@ -102,7 +110,16 @@ d3.csv("data/iris.csv").then((data) => {
         .attr("class", "point")
         .attr("cx", (d) => { return (X_SCALE_WIDTH(d.Sepal_Width) + MARGINS.left); })
         .attr("cy", (d) => { return (Y_SCALE_WIDTH(d.Petal_Width) + MARGINS.bottom); })
-        .attr("r", 4);
+        .attr("r", 4)
+        .style("fill", function (d) {
+          if(d.Species === "setosa") {
+            return "green"
+          } else if (d.Species === "versicolor") {
+            return "orange"
+          } else {
+            return "blue"
+          }
+        });
 
   // Add x axis to vis
   FRAME2.append("g") 
@@ -137,6 +154,11 @@ const FRAME3 = d3.select("#vis3")
 
 d3.csv("data/iris.csv").then((data) => {
     
+    const COLOR = d3
+      .scaleOrdinal()
+      .domain(["setosa", "versicolor", "virginica"])
+      .range(["green", "orange", "blue"]);
+
     // Define scale functions that maps our data x values 
     // (domain) to pixel values (range)
     const X_SCALE_SPECIES = d3.scaleBand()   
@@ -159,7 +181,16 @@ d3.csv("data/iris.csv").then((data) => {
           .attr("y", 100) 
           .attr("width", X_SCALE_SPECIES.bandwidth())
           .attr("height", 250)
-          .attr("class", "bar");
+          .attr("class", "point")
+          .style("fill", function (d) {
+            if(d.Species === "setosa") {
+              return "green"
+            } else if (d.Species === "versicolor") {
+              return "orange"
+            } else {
+              return "blue"
+            }
+          });
 
     // Add x axis to vis
     FRAME3.append("g") 

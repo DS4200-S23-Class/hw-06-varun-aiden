@@ -34,3 +34,12 @@ h1 {
   width: 33.3%;
   min-height: 400px;
 }
+
+/* Add 50% Opacity to Bars and Circles */
+.point {
+  opacity: 50%;
+}
+
+.bar {
+  opacity: 50%;
+}
