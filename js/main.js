@@ -15,6 +15,20 @@ const FRAME1 = d3.select("#vis1")
                     .attr("width", FRAME_WIDTH)
                     .attr("class", "frame");
 
+// Frame for second scatter
+const FRAME2 = d3.select("#vis2") 
+                  .append("svg") 
+                    .attr("height", FRAME_HEIGHT)   
+                    .attr("width", FRAME_WIDTH)
+                    .attr("class", "frame");
+
+// Frame for third vis, bar chart
+const FRAME3 = d3.select("#vis3") 
+                  .append("svg") 
+                    .attr("height", FRAME_HEIGHT)   
+                    .attr("width", FRAME_WIDTH)
+                    .attr("class", "frame");
+
 // Read data and create first plot
 d3.csv("data/iris.csv").then((data) => {
 
@@ -34,7 +48,7 @@ d3.csv("data/iris.csv").then((data) => {
                            .range([VIS_HEIGHT, 0]); 
 
   // Use X_SCALE and Y_SCALE to plot our points and create value, circles
-  let circles = FRAME1.selectAll("points") 
+  let circles1 = FRAME1.selectAll("points") 
       .data(data)
       .enter()
       .append("circle")
@@ -42,13 +56,13 @@ d3.csv("data/iris.csv").then((data) => {
         .attr("cx", (d) => { return (X_SCALE_LENGTH(d.Sepal_Length) + MARGINS.left); })
         .attr("cy", (d) => { return (Y_SCALE_LENGTH(d.Petal_Length) + MARGINS.bottom); })
         .attr("r", 4)
-        .style("fill", function (d) {
+        .attr("fill", function (d) {
           if(d.Species === "setosa") {
-            return "green"
+            return "#00ff99"
           } else if (d.Species === "versicolor") {
-            return "orange"
+            return "#ffcc99"
           } else {
-            return "blue"
+            return "#99ccff"
           }
         });
 
@@ -66,25 +80,7 @@ d3.csv("data/iris.csv").then((data) => {
         .call(d3.axisLeft(Y_SCALE_LENGTH).ticks(10)) 
           .attr("font-size", '10px'); 
 
-  // A title to graph
-  FRAME1.append("text")
-        .attr("x", 200)             
-        .attr("y", (MARGINS.top / 2))
-        .attr("text-anchor", "middle")  
-        .attr("font-size", "16px")  
-        .text("Sepal_Length vs. Petal_Length");
-});
 
-
-// Frame for second scatter
-const FRAME2 = d3.select("#vis2") 
-                  .append("svg") 
-                    .attr("height", FRAME_HEIGHT)   
-                    .attr("width", FRAME_WIDTH)
-                    .attr("class", "frame");
-
-// Read data and create second plot
-d3.csv("data/iris.csv").then((data) => {
 
   // Find max values
   const MAX_X_WIDTH = d3.max(data, (d) => { return parseInt(d.Sepal_Width); });
@@ -103,7 +99,7 @@ d3.csv("data/iris.csv").then((data) => {
                           .range([VIS_HEIGHT, 0]); 
 
   // Use X_SCALE and Y_SCALE to plot our points and create value, circles
-  let circles = FRAME2.selectAll("points") 
+  let circles2 = FRAME2.selectAll("points") 
       .data(data)
       .enter()
       .append("circle")
@@ -111,13 +107,13 @@ d3.csv("data/iris.csv").then((data) => {
         .attr("cx", (d) => { return (X_SCALE_WIDTH(d.Sepal_Width) + MARGINS.left); })
         .attr("cy", (d) => { return (Y_SCALE_WIDTH(d.Petal_Width) + MARGINS.bottom); })
         .attr("r", 4)
-        .style("fill", function (d) {
+        .attr("fill", function (d) {
           if(d.Species === "setosa") {
-            return "green"
+            return "#00ff99"
           } else if (d.Species === "versicolor") {
-            return "orange"
+            return "#ffcc99"
           } else {
-            return "blue"
+            return "#99ccff"
           }
         });
 
@@ -135,24 +131,7 @@ d3.csv("data/iris.csv").then((data) => {
         .call(d3.axisLeft(Y_SCALE_WIDTH).ticks(10)) 
           .attr("font-size", '10px'); 
 
-  // A title to graph
-  FRAME2.append("text")
-        .attr("x", 200)             
-        .attr("y", (MARGINS.top / 2))
-        .attr("text-anchor", "middle")  
-        .attr("font-size", "16px")  
-        .text("Sepal_Width vs. Petal_Width");
-});
 
-
-// Frame for third vis, bar chart
-const FRAME3 = d3.select("#vis3") 
-                  .append("svg") 
-                    .attr("height", FRAME_HEIGHT)   
-                    .attr("width", FRAME_WIDTH)
-                    .attr("class", "frame");
-
-d3.csv("data/iris.csv").then((data) => {
 
     // Define scale functions that maps our data x values 
     // (domain) to pixel values (range)
@@ -168,7 +147,7 @@ d3.csv("data/iris.csv").then((data) => {
                               .range([VIS_HEIGHT, 0]);
 
     // Use X_SCALE_SPECIES and Y_SCALE_SPECIES to plot graph
-    FRAME3.selectAll("bars")  
+    let bars = FRAME3.selectAll("bars")  
         .data(data) // passed from .then  
         .enter()       
         .append("rect")
@@ -177,14 +156,14 @@ d3.csv("data/iris.csv").then((data) => {
           .attr("y", 100) 
           .attr("width", X_SCALE_SPECIES.bandwidth())
           .attr("height", 250)
-          .style("fill", function (d) {
+          .attr("fill", function (d) {
             if(d.Species === "setosa") {
-              return "green"
-            } else if (d.Species === "versicolor") {
-              return "orange"
-            } else {
-              return "blue"
-            }
+            return "#00ff99"
+          } else if (d.Species === "versicolor") {
+            return "#ffcc99"
+          } else {
+            return "#99ccff"
+          }
           });
 
     // Add x axis to vis
@@ -201,11 +180,32 @@ d3.csv("data/iris.csv").then((data) => {
           .call(d3.axisLeft(Y_SCALE_SPECIES).ticks(12)) 
             .attr("font-size", '10px'); 
 
-    // A title to graph
-    FRAME3.append("text")
-    .attr("x", 200)             
-    .attr("y", (MARGINS.top / 2))
-    .attr("text-anchor", "middle")  
-    .attr("font-size", "16px")  
-    .text("Counts of Species");
+
+  // initialize brush area
+  FRAME2.call(d3.brush()                 
+        .extent([[0,0], [FRAME_WIDTH, FRAME_HEIGHT]])
+        // when brush selection changes, update selection for all vis
+        .on("start brush", update_select)
+      );
+
+  // apply style properties on selection for all vis
+  function update_select(event) {
+    // Get selection coordinates
+    let coords = event.selection;
+    
+    // apply "selected" style properties to all points in selection
+    circles1.classed("selected", function(d){ return brushed(coords, (X_SCALE_WIDTH(d.Sepal_Width)+MARGINS.left), (Y_SCALE_WIDTH(d.Petal_Width)+MARGINS.bottom)) });
+    circles2.classed("selected", function(d){ return brushed(coords, (X_SCALE_WIDTH(d.Sepal_Width)+MARGINS.left), (Y_SCALE_WIDTH(d.Petal_Width)+MARGINS.bottom)) });
+    bars.classed("selected", function(d){ return brushed(coords, (X_SCALE_WIDTH(d.Sepal_Width)+MARGINS.left), (Y_SCALE_WIDTH(d.Petal_Width)+MARGINS.bottom)) });
+  }
+
+  // check whether a point is in the selection or not
+  function brushed(coords, cx, cy) {
+    let x0 = coords[0][0],
+        x1 = coords[1][0],
+        y0 = coords[0][1],
+        y1 = coords[1][1];
+    return x0 <= cx && cx <= x1 && y0 <= cy && cy <= y1;
+  }
+
 });

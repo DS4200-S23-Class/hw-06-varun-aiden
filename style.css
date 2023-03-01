@@ -9,6 +9,9 @@ body {
 h1 {
   text-align: center;
 }
+h3 {
+  text-align: center;
+}
 
 /* Create a flex container for the three columns */
 .row {
@@ -42,4 +45,11 @@ h1 {
 
 .bar {
   opacity: 50%;
+}
+
+/* Change stroke color, stroke width, and opacity when points are selected */
+.selected {
+  stroke-width: 1px;
+  stroke: orange;
+  opacity: 1;
 }
